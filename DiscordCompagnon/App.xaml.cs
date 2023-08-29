@@ -16,7 +16,6 @@ namespace DiscordCompagnon
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            CultureInfo.CurrentUICulture = new CultureInfo("en-US");
             base.OnStartup(e);
         }
     }
