@@ -31,6 +31,8 @@ namespace DiscordCompagnon
             Instance = this;
             InitializeComponent();
             CloseContent();
+
+            // initializing the process parser
             timer = new Timer(Properties.Settings.Default.Timer);
             timer.Elapsed += (_, _) => Dispatcher.Invoke(ResetPosition);
             timer.Start();
@@ -44,14 +46,19 @@ namespace DiscordCompagnon
             Maximized = 3,
         }
 
-        private static DeactivatedButton DeactivatedButton { get; } = new DeactivatedButton();
-
+        /// <summary>
+        /// Saved discord process
+        /// </summary>
         private static Process? DiscordProcess { get; set; }
 
+        /// <summary>
+        /// Instance of this window
+        /// </summary>
         private static MainWindow? Instance { get; set; }
 
-        private static MainInterface MainInterface { get; } = new MainInterface();
-
+        /// <summary>
+        /// Shrinks the window
+        /// </summary>
         public static void CloseContent()
         {
             if (Instance is not null)
@@ -62,6 +69,9 @@ namespace DiscordCompagnon
             }
         }
 
+        /// <summary>
+        /// Closes the app
+        /// </summary>
         public static void CloseWindow()
         {
             if (Instance is not null)
@@ -70,6 +80,9 @@ namespace DiscordCompagnon
             }
         }
 
+        /// <summary>
+        /// Expand the window
+        /// </summary>
         public static void OpenContent()
         {
             if (Instance is not null)
@@ -80,6 +93,9 @@ namespace DiscordCompagnon
             }
         }
 
+        /// <summary>
+        /// Check the position of the window relative to the Discord window
+        /// </summary>
         public static void ResetPosition()
         {
             if (Instance is not null)

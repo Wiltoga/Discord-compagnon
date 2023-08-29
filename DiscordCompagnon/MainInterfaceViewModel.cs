@@ -16,15 +16,20 @@ namespace DiscordCompagnon
     {
         public MainInterfaceViewModel()
         {
+            // duration between process parsings
             Timer = Properties.Settings.Default.Timer.ToString();
             Date = DateTime.Now;
+            // check for ante meridiem
             Am = Date.Hour < 13;
             if (!IsAmPm || Am)
                 Hours = Date.Hour.ToString("00");
             else
                 Hours = (Date.Hour - 12).ToString("00");
+
             Minutes = Date.Minute.ToString("00");
             Seconds = "00";
+
+            // user input validation for the timer
             this.WhenAnyValue(o => o.Timer)
                 .Do(value =>
                 {
@@ -38,6 +43,7 @@ namespace DiscordCompagnon
                 })
                 .Subscribe();
 
+            // user input validation for the hours of timestamp
             this.WhenAnyValue(o => o.Hours)
                 .Select(hours =>
                 {
@@ -58,6 +64,7 @@ namespace DiscordCompagnon
                 })
                 .BindTo(this, o => o.Hours);
 
+            // user input validation for the minutes of timestamp
             this.WhenAnyValue(o => o.Minutes)
                 .Select(minutes =>
                 {
@@ -76,6 +83,7 @@ namespace DiscordCompagnon
                 })
                 .BindTo(this, o => o.Minutes);
 
+            // user input validation for the seconds of timestamp
             this.WhenAnyValue(o => o.Seconds)
                 .Select(seconds =>
                 {
@@ -97,31 +105,61 @@ namespace DiscordCompagnon
             SelectedTimestampType = TimestampTypes.First();
         }
 
+        /// <summary>
+        /// Current timestamp is AM
+        /// </summary>
         [Reactive]
         public bool Am { get; set; }
 
+        /// <summary>
+        /// Selected timestamp day
+        /// </summary>
         [Reactive]
         public DateTime Date { get; set; }
 
+        /// <summary>
+        /// Hours of the timestamp
+        /// </summary>
         [Reactive]
         public string Hours { get; set; }
 
+        /// <summary>
+        /// If the current culture uses AM/PM
+        /// </summary>
         public bool IsAmPm { get; } = CultureInfo.CurrentUICulture.DateTimeFormat.ShortTimePattern.Contains("tt");
 
+        /// <summary>
+        /// Minutes of the timestamp
+        /// </summary>
         [Reactive]
         public string Minutes { get; set; }
 
+        /// <summary>
+        /// Seconds of the timestamp
+        /// </summary>
         [Reactive]
         public string Seconds { get; set; }
 
+        /// <summary>
+        /// Selected timestamp render type
+        /// </summary>
         [Reactive]
         public TimestampType SelectedTimestampType { get; set; }
 
+        /// <summary>
+        /// Time between process parsings
+        /// </summary>
         [Reactive]
         public string Timer { get; set; }
 
+        /// <summary>
+        /// List of timestamp render types
+        /// </summary>
         public TimestampType[] TimestampTypes => TimestampType.List;
 
+        /// <summary>
+        /// Copy the timestamp in the clipboard
+        /// </summary>
         public void CopyLink()
         {
             if (int.TryParse(Hours, out var intHours) && int.TryParse(Minutes, out var intMinutes) && int.TryParse(Seconds, out var intSeconds))
@@ -135,6 +173,9 @@ namespace DiscordCompagnon
             }
         }
 
+        /// <summary>
+        /// Saves the settings of the app
+        /// </summary>
         public void SaveSettings()
         {
             if (int.TryParse(Timer, out var resultTimer))
@@ -144,6 +185,9 @@ namespace DiscordCompagnon
         }
     }
 
+    /// <summary>
+    /// Type of timestamp rendering
+    /// </summary>
     internal class TimestampType
     {
         public TimestampType(string name, string format, string? example)
@@ -153,6 +197,9 @@ namespace DiscordCompagnon
             Example = example ?? DateTime.Now.ToString(format);
         }
 
+        /// <summary>
+        /// List of all types supported
+        /// </summary>
         public static TimestampType[] List { get; } = new[]
         {
             new TimestampType("Short date", "d", null),
@@ -164,8 +211,19 @@ namespace DiscordCompagnon
             new TimestampType("Time left", "R", "in 3 days"),
         };
 
+        /// <summary>
+        /// An example of this render type
+        /// </summary>
         public string Example { get; }
+
+        /// <summary>
+        /// Discord format of the render type
+        /// </summary>
         public string Format { get; }
+
+        /// <summary>
+        /// Description of the render type
+        /// </summary>
         public string Name { get; }
     }
 }
