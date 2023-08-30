@@ -15,6 +15,316 @@
         </Style>
 
         <Style
+            TargetType="CheckBox">
+            <Setter
+                Property="Cursor"
+                Value="Hand" />
+            <Setter
+                Property="Template">
+                <Setter.Value>
+                    <ControlTemplate
+                        TargetType="CheckBox">
+                        <ControlTemplate.Resources>
+                            <Duration
+                                x:Key="duration">
+                                0:0:.1
+                            </Duration>
+                            <KeyTime
+                                x:Key="half">
+                                0:0:.1
+                            </KeyTime>
+                            <KeyTime
+                                x:Key="full">
+                                0:0:.2
+                            </KeyTime>
+                        </ControlTemplate.Resources>
+                        <DockPanel
+                            Background="#01000000">
+                            <Border
+                                DockPanel.Dock="Right"
+                                Width="40"
+                                Height="24"
+                                CornerRadius="12">
+                                <Border.Background>
+                                    <SolidColorBrush
+                                        x:Name="back"
+                                        Color="#80848e" />
+                                </Border.Background>
+                                <Grid
+                                    Height="18"
+                                    VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition
+                                            Width="3"
+                                            x:Name="spaceLeft" />
+                                        <ColumnDefinition
+                                            Width="*" />
+                                        <ColumnDefinition
+                                            Width="19"
+                                            x:Name="spaceRight" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border
+                                        Grid.Column="1"
+                                        Name="check"
+                                        Height="18"
+                                        CornerRadius="9"
+                                        Background="White">
+                                    </Border>
+                                    <Grid
+                                        Grid.Column="1"
+                                        Width="18"
+                                        HorizontalAlignment="Center">
+                                        <Line
+                                            Name="line1"
+                                            Stroke="{Binding ElementName=back}"
+                                            StrokeThickness="2"
+                                            X1="5"
+                                            Y1="5"
+                                            X2="13"
+                                            Y2="13" />
+                                        <Line
+                                            Name="line2"
+                                            Stroke="{Binding ElementName=back}"
+                                            StrokeThickness="2"
+                                            X1="13"
+                                            Y1="5"
+                                            X2="5"
+                                            Y2="13" />
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                            <ContentPresenter
+                                TextElement.Foreground="White"
+                                TextElement.FontWeight="DemiBold"
+                                Content="{TemplateBinding Content}" />
+                        </DockPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger
+                                Property="IsChecked"
+                                Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation
+                                                Storyboard.TargetName="back"
+                                                Storyboard.TargetProperty="Color"
+                                                From="#80848e"
+                                                To="#23a55a"
+                                                Duration="{StaticResource duration}" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="line1"
+                                                Storyboard.TargetProperty="X1"
+                                                From="5"
+                                                To="7"
+                                                Duration="{StaticResource duration}" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="line1"
+                                                Storyboard.TargetProperty="Y1"
+                                                From="5"
+                                                To="13"
+                                                Duration="{StaticResource duration}" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="line1"
+                                                Storyboard.TargetProperty="X2"
+                                                From="13"
+                                                To="14"
+                                                Duration="{StaticResource duration}" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="line1"
+                                                Storyboard.TargetProperty="Y2"
+                                                From="13"
+                                                To="5"
+                                                Duration="{StaticResource duration}" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="line2"
+                                                Storyboard.TargetProperty="X1"
+                                                From="13"
+                                                To="4"
+                                                Duration="{StaticResource duration}" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="line2"
+                                                Storyboard.TargetProperty="Y1"
+                                                From="5"
+                                                To="10"
+                                                Duration="{StaticResource duration}" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="line2"
+                                                Storyboard.TargetProperty="X2"
+                                                From="5"
+                                                To="7"
+                                                Duration="{StaticResource duration}" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="line2"
+                                                Storyboard.TargetProperty="Y2"
+                                                From="13"
+                                                To="13"
+                                                Duration="{StaticResource duration}" />
+                                            <DoubleAnimationUsingKeyFrames
+                                                Storyboard.TargetName="check"
+                                                Storyboard.TargetProperty="Height">
+                                                <LinearDoubleKeyFrame
+                                                    Value="18"
+                                                    KeyTime="0:0:0" />
+                                                <LinearDoubleKeyFrame
+                                                    Value="16"
+                                                    KeyTime="{StaticResource half}" />
+                                                <LinearDoubleKeyFrame
+                                                    Value="18"
+                                                    KeyTime="{StaticResource full}" />
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames
+                                                Storyboard.TargetName="check"
+                                                Storyboard.TargetProperty="(local:Ext.SimpleCorner)">
+                                                <LinearDoubleKeyFrame
+                                                    Value="9"
+                                                    KeyTime="0:0:0" />
+                                                <LinearDoubleKeyFrame
+                                                    Value="8"
+                                                    KeyTime="{StaticResource half}" />
+                                                <LinearDoubleKeyFrame
+                                                    Value="9"
+                                                    KeyTime="{StaticResource full}" />
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames
+                                                Storyboard.TargetName="spaceLeft"
+                                                Storyboard.TargetProperty="(local:Ext.ColumnWidth)">
+                                                <LinearDoubleKeyFrame
+                                                    Value="3"
+                                                    KeyTime="0:0:0" />
+                                                <SplineDoubleKeyFrame
+                                                    Value="19"
+                                                    KeySpline=".4,0 1,.6"
+                                                    KeyTime="{StaticResource full}" />
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames
+                                                Storyboard.TargetName="spaceRight"
+                                                Storyboard.TargetProperty="(local:Ext.ColumnWidth)">
+                                                <LinearDoubleKeyFrame
+                                                    Value="19"
+                                                    KeyTime="0:0:0" />
+                                                <SplineDoubleKeyFrame
+                                                    Value="3"
+                                                    KeySpline="0,.4 .6,1"
+                                                    KeyTime="{StaticResource full}" />
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation
+                                                Storyboard.TargetName="back"
+                                                Storyboard.TargetProperty="Color"
+                                                From="#23a55a"
+                                                To="#80848e"
+                                                Duration="0:0:.2" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="line1"
+                                                Storyboard.TargetProperty="X1"
+                                                From="7"
+                                                To="5"
+                                                Duration="{StaticResource duration}" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="line1"
+                                                Storyboard.TargetProperty="Y1"
+                                                From="13"
+                                                To="5"
+                                                Duration="{StaticResource duration}" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="line1"
+                                                Storyboard.TargetProperty="X2"
+                                                From="14"
+                                                To="13"
+                                                Duration="{StaticResource duration}" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="line1"
+                                                Storyboard.TargetProperty="Y2"
+                                                From="5"
+                                                To="13"
+                                                Duration="{StaticResource duration}" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="line2"
+                                                Storyboard.TargetProperty="X1"
+                                                From="4"
+                                                To="13"
+                                                Duration="{StaticResource duration}" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="line2"
+                                                Storyboard.TargetProperty="Y1"
+                                                From="10"
+                                                To="5"
+                                                Duration="{StaticResource duration}" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="line2"
+                                                Storyboard.TargetProperty="X2"
+                                                From="7"
+                                                To="5"
+                                                Duration="{StaticResource duration}" />
+                                            <DoubleAnimation
+                                                Storyboard.TargetName="line2"
+                                                Storyboard.TargetProperty="Y2"
+                                                From="13"
+                                                To="13"
+                                                Duration="{StaticResource duration}" />
+                                            <DoubleAnimationUsingKeyFrames
+                                                Storyboard.TargetName="check"
+                                                Storyboard.TargetProperty="Height">
+                                                <LinearDoubleKeyFrame
+                                                    Value="18"
+                                                    KeyTime="0:0:0" />
+                                                <LinearDoubleKeyFrame
+                                                    Value="16"
+                                                    KeyTime="{StaticResource half}" />
+                                                <LinearDoubleKeyFrame
+                                                    Value="18"
+                                                    KeyTime="{StaticResource full}" />
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames
+                                                Storyboard.TargetName="check"
+                                                Storyboard.TargetProperty="(local:Ext.SimpleCorner)">
+                                                <LinearDoubleKeyFrame
+                                                    Value="9"
+                                                    KeyTime="0:0:0" />
+                                                <LinearDoubleKeyFrame
+                                                    Value="8"
+                                                    KeyTime="{StaticResource half}" />
+                                                <LinearDoubleKeyFrame
+                                                    Value="9"
+                                                    KeyTime="{StaticResource full}" />
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames
+                                                Storyboard.TargetName="spaceLeft"
+                                                Storyboard.TargetProperty="(local:Ext.ColumnWidth)">
+                                                <LinearDoubleKeyFrame
+                                                    Value="19"
+                                                    KeyTime="0:0:0" />
+                                                <SplineDoubleKeyFrame
+                                                    Value="3"
+                                                    KeySpline="0,.4 .6,1"
+                                                    KeyTime="{StaticResource full}" />
+                                            </DoubleAnimationUsingKeyFrames>
+                                            <DoubleAnimationUsingKeyFrames
+                                                Storyboard.TargetName="spaceRight"
+                                                Storyboard.TargetProperty="(local:Ext.ColumnWidth)">
+                                                <LinearDoubleKeyFrame
+                                                    Value="3"
+                                                    KeyTime="0:0:0" />
+                                                <SplineDoubleKeyFrame
+                                                    Value="19"
+                                                    KeySpline=".4,0 1,.6"
+                                                    KeyTime="{StaticResource full}" />
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style
             TargetType="ComboBox">
             <Setter
                 Property="Cursor"
