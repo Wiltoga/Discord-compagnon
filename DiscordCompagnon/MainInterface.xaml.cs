@@ -48,7 +48,7 @@ namespace DiscordCompagnon
 
         private void CopyTimestampButton_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.CopyLink();
+            ViewModel.Timestamps.CopyLink();
         }
 
         private void NumberTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -66,7 +66,7 @@ namespace DiscordCompagnon
         private async void TriggerSettingsSave(object sender, RoutedEventArgs e)
         {
             await Task.Delay(300);
-            ViewModel.SaveSettings();
+            ViewModel.Settings.SaveSettings();
         }
 
         private void WindowStateButton_Click(object sender, RoutedEventArgs e)

@@ -185,6 +185,7 @@
                 <TabItem
                     Header="Timestamp">
                     <StackPanel
+                        DataContext="{Binding Timestamps}"
                         Margin="10"
                         Orientation="Vertical">
                         <StackPanel
@@ -391,6 +392,7 @@
                 <TabItem
                     Header="Settings">
                     <DockPanel
+                        DataContext="{Binding Settings}"
                         Margin="10">
                         <Button
                             Margin="5"
