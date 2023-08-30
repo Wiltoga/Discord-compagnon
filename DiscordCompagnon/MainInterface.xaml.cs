@@ -57,16 +57,16 @@ namespace DiscordCompagnon
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        private async void TimerTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            await Task.Delay(300);
-            ViewModel.SaveSettings();
-        }
-
         private void TimeTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             var textbox = (TextBox)sender;
             textbox.SelectAll();
+        }
+
+        private async void TriggerSettingsSave(object sender, RoutedEventArgs e)
+        {
+            await Task.Delay(300);
+            ViewModel.SaveSettings();
         }
 
         private void WindowStateButton_Click(object sender, RoutedEventArgs e)

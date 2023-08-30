@@ -1,11 +1,15 @@
 ﻿using Lazy;
+using Microsoft.Win32;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,6 +18,9 @@ namespace DiscordCompagnon
 {
     internal class MainInterfaceViewModel : ReactiveObject
     {
+        private const string StartupRegistryKeyName = @"DiscordCompagnon";
+        private const string StartupRegistryKeyPath = @"Software\Microsoft\Windows\CurrentVersion\Run";
+
         public MainInterfaceViewModel()
         {
             // duration between process parsings
@@ -29,6 +36,11 @@ namespace DiscordCompagnon
             Minutes = Date.Minute.ToString("00");
             Seconds = "00";
 
+            // checking the run on startup value
+            {
+                using var startupKey = Registry.CurrentUser.OpenSubKey(StartupRegistryKeyPath);
+                RunsOnStartup = startupKey?.GetValue(StartupRegistryKeyName, null) is not null;
+            }
             // user input validation for the timer
             this.WhenAnyValue(o => o.Timer)
                 .Do(value =>
@@ -135,6 +147,12 @@ namespace DiscordCompagnon
         public string Minutes { get; set; }
 
         /// <summary>
+        /// Runs on startup
+        /// </summary>
+        [Reactive]
+        public bool RunsOnStartup { get; set; }
+
+        /// <summary>
         /// Seconds of the timestamp
         /// </summary>
         [Reactive]
@@ -182,6 +200,23 @@ namespace DiscordCompagnon
                 Properties.Settings.Default.Timer = resultTimer;
 
             Properties.Settings.Default.Save();
+
+            try
+            {
+                using var startupKey = Registry.CurrentUser.OpenSubKey(StartupRegistryKeyPath, true);
+                using var currentProcess = Process.GetCurrentProcess();
+                if (startupKey is not null)
+                {
+                    var exePath = Path.Combine(AppContext.BaseDirectory, currentProcess.ProcessName + ".exe");
+#if RELEASE
+                    if (RunsOnStartup)
+                        startupKey.SetValue(StartupRegistryKeyName, exePath);
+                    else
+                        startupKey.DeleteValue(StartupRegistryKeyName, false);
+#endif
+                }
+            }
+            catch { }
         }
     }
 

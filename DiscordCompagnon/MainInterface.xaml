@@ -427,8 +427,19 @@
                             <TextBox
                                 PreviewTextInput="NumberTextBox_PreviewTextInput"
                                 Text="{Binding Timer, Mode=TwoWay}"
-                                LostFocus='TimerTextBox_LostFocus'
+                                LostFocus='TriggerSettingsSave'
                                 Margin="5" />
+                            <TextBlock
+                                Style="{StaticResource TitleBlock}">
+                                Startup
+                            </TextBlock>
+                            <CheckBox
+                                Margin="5"
+                                Checked="TriggerSettingsSave"
+                                Unchecked="TriggerSettingsSave"
+                                IsChecked="{Binding RunsOnStartup, Mode=TwoWay}">
+                                Run app on startup
+                            </CheckBox>
                         </StackPanel>
                     </DockPanel>
                 </TabItem>
