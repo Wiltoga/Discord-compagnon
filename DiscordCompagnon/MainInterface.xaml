@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:DiscordCompagnon"
              mc:Ignorable="d"
              MinWidth="500"
+             UseLayoutRounding="True"
              Style="{StaticResource baseStyle}">
     <UserControl.DataContext>
         <local:MainInterfaceViewModel />
