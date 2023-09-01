@@ -243,6 +243,12 @@ namespace DiscordCompagnon
         [DllImport("user32")]
         private static extern bool IsWindowVisible(IntPtr hWnd);
 
+        private void Window_Deactivated(object sender, EventArgs e)
+        {
+            if (!activated.ViewModel.Settings.StaysFocused)
+                CloseContent();
+        }
+
         [StructLayout(LayoutKind.Sequential)]
         private struct RECT
         {

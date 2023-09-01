@@ -10,7 +10,8 @@
         Background="Transparent"
         Title="Discord compagnon"
         Topmost="True"
-        ShowInTaskbar="False">
+        ShowInTaskbar="False"
+        Deactivated="Window_Deactivated">
     <Grid>
         <local:DeactivatedButton
             VerticalAlignment="Top"

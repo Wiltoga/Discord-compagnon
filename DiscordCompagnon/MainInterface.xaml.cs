@@ -29,7 +29,7 @@ namespace DiscordCompagnon
             InitializeComponent();
         }
 
-        private MainInterfaceViewModel ViewModel => (MainInterfaceViewModel)DataContext;
+        internal MainInterfaceViewModel ViewModel => (MainInterfaceViewModel)DataContext;
 
         private void Calendar_GotMouseCapture(object sender, MouseEventArgs e)
         {

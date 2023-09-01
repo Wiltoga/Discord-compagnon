@@ -22,6 +22,8 @@ namespace DiscordCompagnon
             // duration between process parsings
             Timer = Properties.Settings.Default.Timer.ToString();
 
+            // If the window stays open in loss of focus
+            StaysFocused = Properties.Settings.Default.StayFocused;
             // checking the run on startup value
             {
                 using var startupKey = Registry.CurrentUser.OpenSubKey(StartupRegistryKeyPath);
@@ -49,6 +51,12 @@ namespace DiscordCompagnon
         public bool RunsOnStartup { get; set; }
 
         /// <summary>
+        /// Runs on startup
+        /// </summary>
+        [Reactive]
+        public bool StaysFocused { get; set; }
+
+        /// <summary>
         /// Time between process parsings
         /// </summary>
         [Reactive]
@@ -61,6 +69,8 @@ namespace DiscordCompagnon
         {
             if (int.TryParse(Timer, out var resultTimer))
                 Properties.Settings.Default.Timer = resultTimer;
+
+            Properties.Settings.Default.StayFocused = StaysFocused;
 
             Properties.Settings.Default.Save();
 

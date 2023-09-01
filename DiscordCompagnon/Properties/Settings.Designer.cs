@@ -34,5 +34,17 @@ namespace DiscordCompagnon.Properties {
                 this["Timer"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool StayFocused {
+            get {
+                return ((bool)(this["StayFocused"]));
+            }
+            set {
+                this["StayFocused"] = value;
+            }
+        }
     }
 }

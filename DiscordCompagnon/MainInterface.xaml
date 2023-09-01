@@ -522,6 +522,18 @@
                                 IsChecked="{Binding RunsOnStartup, Mode=TwoWay}">
                                 Run app on startup
                             </CheckBox>
+                            <TextBlock
+                                Margin="5"
+                                Style="{StaticResource TitleBlock}">
+                                Behavior
+                            </TextBlock>
+                            <CheckBox
+                                Margin="5"
+                                Checked="TriggerSettingsSave"
+                                Unchecked="TriggerSettingsSave"
+                                IsChecked="{Binding StaysFocused, Mode=TwoWay}">
+                                Stay open without focus
+                            </CheckBox>
                         </StackPanel>
                     </DockPanel>
                 </TabItem>
