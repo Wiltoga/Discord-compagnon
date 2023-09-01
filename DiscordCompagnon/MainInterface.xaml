@@ -445,6 +445,63 @@
                         </StackPanel>
                     </DockPanel>
                 </TabItem>
+                <TabItem
+                    Header="About">
+                    <StackPanel
+                        DataContext="{Binding About}"
+                        Margin="10"
+                        Orientation="Vertical">
+                        <TextBlock
+                            Margin="5"
+                            Style="{StaticResource TitleBlock}">
+                            Version
+                        </TextBlock>
+                        <TextBlock
+                            Margin="5"
+                            Style="{StaticResource DiscordText}"
+                            Text="{Binding Version}" />
+                        <TextBlock
+                            Margin="5"
+                            Style="{StaticResource TitleBlock}">
+                            Created by
+                        </TextBlock>
+                        <TextBlock
+                            Margin="5"
+                            Style="{StaticResource DiscordText}">
+                            <TextBlock.ToolTip>
+                                <ToolTip>
+                                    https://github.com/Wiltoga
+                                </ToolTip>
+                            </TextBlock.ToolTip>
+                            <Hyperlink
+                                Foreground="#269bd6"
+                                RequestNavigate="Hyperlink_RequestNavigate"
+                                NavigateUri="https://github.com/Wiltoga">
+                                Nathan HANEN
+                            </Hyperlink>
+                        </TextBlock>
+                        <TextBlock
+                            Margin="5"
+                            Style="{StaticResource TitleBlock}">
+                            Source
+                        </TextBlock>
+                        <TextBlock
+                            Margin="5"
+                            Style="{StaticResource DiscordText}">
+                            <TextBlock.ToolTip>
+                                <ToolTip>
+                                    https://github.com/Wiltoga/Discord-compagnon
+                                </ToolTip>
+                            </TextBlock.ToolTip>
+                            <Hyperlink
+                                Foreground="#269bd6"
+                                RequestNavigate="Hyperlink_RequestNavigate"
+                                NavigateUri="https://github.com/Wiltoga/Discord-compagnon">
+                                Github
+                            </Hyperlink>
+                        </TextBlock>
+                    </StackPanel>
+                </TabItem>
             </TabControl>
         </Border>
     </DockPanel>
