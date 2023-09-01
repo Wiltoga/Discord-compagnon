@@ -484,6 +484,15 @@
                             </Hyperlink>
                         </TextBlock>
                         <TextBlock
+                            MaxWidth="300"
+                            HorizontalAlignment="Left"
+                            TextWrapping="Wrap"
+                            Margin="5"
+                            Opacity=".5"
+                            Style="{StaticResource DiscordText}">
+                            I am not affiliated with Discord Inc. in any way.
+                        </TextBlock>
+                        <TextBlock
                             Margin="5"
                             Style="{StaticResource TitleBlock}">
                             Source
