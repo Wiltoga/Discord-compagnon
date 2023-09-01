@@ -12,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -36,6 +37,19 @@ namespace DiscordCompagnon
             timer = new Timer(Properties.Settings.Default.Timer);
             timer.Elapsed += (_, _) => Dispatcher.Invoke(ResetPosition);
             timer.Start();
+
+            Handle = new WindowInteropHelper(this).Handle;
+        }
+
+        private enum GetWindowType : uint
+        {
+            GW_HWNDFIRST = 0,
+            GW_HWNDLAST = 1,
+            GW_HWNDNEXT = 2,
+            GW_HWNDPREV = 3,
+            GW_OWNER = 4,
+            GW_CHILD = 5,
+            GW_ENABLEDPOPUP = 6
         }
 
         private enum ShowWindowCommands : int
@@ -45,6 +59,8 @@ namespace DiscordCompagnon
             Minimized = 2,
             Maximized = 3,
         }
+
+        public IntPtr Handle { get; }
 
         /// <summary>
         /// Saved discord process
@@ -118,28 +134,69 @@ namespace DiscordCompagnon
                 {
                     try
                     {
+                        var showWindow = false;
+                        // check Discord window dimensions and state
                         var windowSize = new RECT();
                         GetWindowRect(DiscordProcess.MainWindowHandle, ref windowSize);
                         var state = GetPlacement(DiscordProcess.MainWindowHandle);
+                        if (!IsWindowVisible(DiscordProcess.MainWindowHandle))
+                            state.showCmd = ShowWindowCommands.Hide;
                         switch (state.showCmd)
                         {
                             case ShowWindowCommands.Normal:
-                                Instance.Show();
+                                showWindow = true;
                                 Instance.Top = windowSize.Top;
                                 Instance.Left = windowSize.Left + 71;
                                 break;
 
+                            // somehow, even if the Discord window is closed, it still is in the "normal" state.
                             case ShowWindowCommands.Hide:
                             case ShowWindowCommands.Minimized:
-                                Instance.Hide();
+                                showWindow = false;
                                 break;
 
                             case ShowWindowCommands.Maximized:
-                                Instance.Show();
+                                showWindow = true;
                                 Instance.Top = windowSize.Top + 7;
                                 Instance.Left = windowSize.Left + 71;
                                 break;
                         }
+
+                        // check if another window is on top of the hot area of discord's window
+                        IntPtr other = DiscordProcess.MainWindowHandle;
+                        var compagnonBox = new RECT
+                        {
+                            Left = (int)Instance.Left,
+                            Right = (int)Instance.Left + 100,
+                            Top = (int)Instance.Top,
+                            Bottom = (int)Instance.Top + 22,
+                        };
+                        while ((other = GetWindow(other, GetWindowType.GW_HWNDPREV)) != IntPtr.Zero)
+                        {
+                            if (other == Instance.Handle)
+                                continue;
+                            if (!IsWindowVisible(other))
+                                continue;
+                            var otherSize = new RECT();
+                            var sb = new StringBuilder(256);
+                            GetWindowText(other, sb, 256);
+                            var title = sb.ToString();
+#if DEBUG
+                            // to prevent the debugging overlay from triggering the hiding
+                            if (title == "")
+                                continue;
+#endif
+                            var otherState = GetPlacement(other);
+                            GetWindowRect(other, ref otherSize);
+
+                            if (compagnonBox.Collision(otherSize))
+                                showWindow = false;
+                        }
+
+                        if (showWindow)
+                            Instance.Show();
+                        else
+                            Instance.Hide();
                     }
                     catch { }
                 }
@@ -160,12 +217,24 @@ namespace DiscordCompagnon
             return placement;
         }
 
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport("Oleacc")]
+        private static extern IntPtr GetProcessHandleFromHwnd(IntPtr hwnd);
+
+        [DllImport("user32")]
+        private static extern IntPtr GetWindow(IntPtr hwnd, GetWindowType uCmd);
+
+        [DllImport("user32", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
 
         [DllImport("user32")]
         private static extern bool GetWindowRect(IntPtr hwnd, ref RECT lpRect);
+
+        [DllImport("user32", CharSet = CharSet.Auto)]
+        private static extern int GetWindowText(IntPtr hWnd, StringBuilder title, int size);
+
+        [DllImport("user32")]
+        private static extern bool IsWindowVisible(IntPtr hWnd);
 
         [StructLayout(LayoutKind.Sequential)]
         private struct RECT
@@ -176,6 +245,44 @@ namespace DiscordCompagnon
             public int Bottom;      // y position of lower-right corner
             public int Width { get => Right - Left; set => Right = value + Left; }
             public int Height { get => Bottom - Top; set => Bottom = value + Top; }
+
+            public bool Collision(RECT hitbox)
+            {
+                // each corner to the other box
+                foreach ((int Y, int X) point in new[]
+                {
+                    (Top, Left),
+                    (Top, Right),
+                    (Bottom, Left),
+                    (Bottom, Right),
+                })
+                {
+                    if (hitbox.Collision(point.X, point.Y))
+                        return true;
+                }
+                // each other corner to the current box
+                foreach ((int Y, int X) point in new[]
+                {
+                    (hitbox.Top, hitbox.Left),
+                    (hitbox.Top, hitbox.Right),
+                    (hitbox.Bottom, hitbox.Left),
+                    (hitbox.Bottom, hitbox.Right),
+                })
+                {
+                    if (Collision(point.X, point.Y))
+                        return true;
+                }
+
+                // NOTE : there are other checks to do for a good rectangle collision, notably if the collision is like this: ➕,
+                // but it's a very very small probability with windows, so I don't care
+
+                return false;
+            }
+
+            public bool Collision(int x, int y)
+            {
+                return x >= Left && x <= Right && y >= Top && y <= Bottom;
+            }
 
             private RECT(int left, int top, int right, int bottom)
             {
