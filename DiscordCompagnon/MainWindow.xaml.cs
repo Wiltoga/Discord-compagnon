@@ -217,9 +217,6 @@ namespace DiscordCompagnon
             return placement;
         }
 
-        [DllImport("Oleacc")]
-        private static extern IntPtr GetProcessHandleFromHwnd(IntPtr hwnd);
-
         [DllImport("user32")]
         private static extern IntPtr GetWindow(IntPtr hwnd, GetWindowType uCmd);
 
