@@ -194,12 +194,12 @@ namespace DiscordCompagnon
         /// </summary>
         public static TimestampType[] List { get; } = new[]
         {
-            new TimestampType("Short date", "d", null),
-            new TimestampType("Long date", "D", null),
-            new TimestampType("Short time", "t", null),
-            new TimestampType("Long time", "T", null),
-            new TimestampType("Date & time", "f", null),
-            new TimestampType("Weekday, date & time", "f", $"{DateTime.Now:dddd}, {DateTime.Now:f}"),
+            new TimestampType("Short date", "d", "09/01/2023"),
+            new TimestampType("Long date", "D", "September 1 2023"),
+            new TimestampType("Short time", "t", "07:34 AM"),
+            new TimestampType("Long time", "T", "07:34:25 AM"),
+            new TimestampType("Date & time", "f", "September 1 2023 07:34 AM"),
+            new TimestampType("Weekday, date & time", "f", "Friday, September 1 2023 07:34 AM"),
             new TimestampType("Time left", "R", "in 3 days"),
         };
 
