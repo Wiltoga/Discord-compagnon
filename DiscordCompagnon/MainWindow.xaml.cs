@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ namespace DiscordCompagnon
     /// </summary>
     public partial class MainWindow : Window
     {
+        private IntPtr handle;
         private Timer timer;
 
         public MainWindow()
@@ -33,12 +35,12 @@ namespace DiscordCompagnon
             InitializeComponent();
             CloseContent();
 
+            handle = IntPtr.Zero;
             // initializing the process parser
             timer = new Timer(Properties.Settings.Default.Timer);
             timer.Elapsed += (_, _) => Dispatcher.Invoke(ResetPosition);
-            timer.Start();
 
-            Handle = new WindowInteropHelper(this).Handle;
+            timer.Start();
         }
 
         private enum GetWindowType : uint
@@ -60,7 +62,15 @@ namespace DiscordCompagnon
             Maximized = 3,
         }
 
-        public IntPtr Handle { get; }
+        public IntPtr Handle
+        {
+            get
+            {
+                if (handle == IntPtr.Zero)
+                    handle = new WindowInteropHelper(this).Handle;
+                return handle;
+            }
+        }
 
         /// <summary>
         /// Saved discord process
@@ -178,11 +188,11 @@ namespace DiscordCompagnon
                             if (!IsWindowVisible(other))
                                 continue;
                             var otherSize = new RECT();
+#if DEBUG
+                            // to prevent the debugging overlay from triggering the hiding
                             var sb = new StringBuilder(256);
                             GetWindowText(other, sb, 256);
                             var title = sb.ToString();
-#if DEBUG
-                            // to prevent the debugging overlay from triggering the hiding
                             if (title == "")
                                 continue;
 #endif

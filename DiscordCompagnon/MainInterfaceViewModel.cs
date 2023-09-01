@@ -22,11 +22,13 @@ namespace DiscordCompagnon
         {
             Settings = new SettingsViewModel();
             Timestamps = new TimestampsViewModel();
+            TextModifier = new TextModifierViewModel();
             About = new AboutViewModel();
         }
 
         public AboutViewModel About { get; }
         public SettingsViewModel Settings { get; }
+        public TextModifierViewModel TextModifier { get; }
         public TimestampsViewModel Timestamps { get; }
     }
 }

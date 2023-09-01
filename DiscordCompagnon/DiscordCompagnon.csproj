@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
 	  <TargetFramework>net6.0-windows10.0.17763</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
@@ -9,8 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="CapitalizeWords.png" />
+    <None Remove="circles.png" />
     <None Remove="copy.png" />
+    <None Remove="cursedText.png" />
+    <None Remove="emojiText.png" />
+    <None Remove="fancyText.png" />
+    <None Remove="fullLow.png" />
+    <None Remove="fullUpper.png" />
     <None Remove="help.png" />
+    <None Remove="scriptText.png" />
+    <None Remove="smallText.png" />
+    <None Remove="spongebob.png" />
+    <None Remove="titleText.png" />
+    <None Remove="wideText.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,8 +33,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="capitalizeWords.png" />
+    <Resource Include="circles.png" />
     <Resource Include="copy.png" />
+    <Resource Include="cursedText.png" />
+    <Resource Include="emojiText.png" />
+    <Resource Include="fancyText.png" />
+    <Resource Include="fullLow.png" />
+    <Resource Include="fullUpper.png" />
     <Resource Include="help.png" />
+    <Resource Include="scriptText.png" />
+    <Resource Include="smallText.png" />
+    <Resource Include="spongebob.png" />
+    <Resource Include="titleText.png" />
+    <Resource Include="wideText.png" />
   </ItemGroup>
 
   <ItemGroup>

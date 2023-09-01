@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -35,6 +36,32 @@ namespace DiscordCompagnon
             }
 
             base.OnStartup(e);
+        }
+
+        private void disp(byte[] bytes, bool copy)
+        {
+            var str = Encoding.Unicode.GetString(bytes);
+            disp(str);
+            if (copy)
+                Clipboard.SetText(str, TextDataFormat.UnicodeText);
+        }
+
+        private void disp(string str)
+        {
+            Console.WriteLine(str);
+            foreach (var b in Encoding.Unicode.GetBytes(str))
+            {
+                for (int i = 7; i >= 0; --i)
+                {
+                    var shift = 0b1 << i;
+                    if ((shift & b) == shift)
+                        Console.Write("8");
+                    else
+                        Console.Write("^");
+                }
+                Console.Write('|');
+            }
+            Console.WriteLine();
         }
     }
 }

@@ -394,6 +394,81 @@
                     </StackPanel>
                 </TabItem>
                 <TabItem
+                    Header="Text modifier">
+                    <StackPanel
+                        Orientation="Vertical"
+                        Margin="10"
+                        DataContext="{Binding TextModifier}">
+                        <DockPanel>
+                            <Button
+                                DockPanel.Dock="Right"
+                                Click="ImportTextButton_Click"
+                                Style="{StaticResource BlueButton}"
+                                Margin="5">
+                                Import clipboard
+                            </Button>
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Style="{StaticResource TitleBlock}"
+                                Margin="5">
+                                Text to change
+                            </TextBlock>
+                        </DockPanel>
+                        <TextBox
+                            TextWrapping="Wrap"
+                            AcceptsReturn="True"
+                            AcceptsTab="True"
+                            FontSize="14"
+                            Text="{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Margin="5"
+                            Width="600"
+                            MinLines="3">
+                        </TextBox>
+                        <ItemsControl
+                            Margin="5"
+                            ItemsSource="{Binding TextChangers}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid
+                                        HorizontalAlignment="Left"
+                                        Columns="8" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate
+                                    DataType="{x:Type local:ITextChanger}">
+                                    <Button
+                                        Click="CopyModifiedTextButton_Click"
+                                        MouseEnter="TextModifierButton_MouseEnter"
+                                        Margin="3">
+                                        <Button.ToolTip>
+                                            <ToolTip
+                                                Content="{Binding Name}" />
+                                        </Button.ToolTip>
+                                        <Image
+                                            Width="24"
+                                            Height="24"
+                                            Stretch="None"
+                                            Source="{Binding Icon}" />
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock
+                            Margin="5"
+                            Style="{StaticResource TitleBlock}">
+                            Preview
+                        </TextBlock>
+                        <TextBlock
+                            TextWrapping="Wrap"
+                            MaxWidth="600"
+                            Style="{StaticResource DiscordText}"
+                            FontSize="14"
+                            Margin="5"
+                            Text="{Binding PreviewText}" />
+                    </StackPanel>
+                </TabItem>
+                <TabItem
                     Header="Settings">
                     <DockPanel
                         DataContext="{Binding Settings}"
@@ -436,6 +511,7 @@
                                 LostFocus='TriggerSettingsSave'
                                 Margin="5" />
                             <TextBlock
+                                Margin="5"
                                 Style="{StaticResource TitleBlock}">
                                 Startup
                             </TextBlock>
@@ -478,7 +554,6 @@
                                 </ToolTip>
                             </TextBlock.ToolTip>
                             <Hyperlink
-                                Foreground="#269bd6"
                                 RequestNavigate="Hyperlink_RequestNavigate"
                                 NavigateUri="https://github.com/Wiltoga">
                                 Nathan HANEN
@@ -507,7 +582,6 @@
                                 </ToolTip>
                             </TextBlock.ToolTip>
                             <Hyperlink
-                                Foreground="#269bd6"
                                 RequestNavigate="Hyperlink_RequestNavigate"
                                 NavigateUri="https://github.com/Wiltoga/Discord-compagnon">
                                 Github

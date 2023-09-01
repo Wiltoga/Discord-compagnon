@@ -16,7 +16,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Calendar = System.Windows.Controls.Calendar;
 
 namespace DiscordCompagnon
 {
@@ -47,6 +46,11 @@ namespace DiscordCompagnon
             MainWindow.CloseWindow();
         }
 
+        private void CopyModifiedTextButton_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(ViewModel.TextModifier.PreviewText, TextDataFormat.UnicodeText);
+        }
+
         private void CopyTimestampButton_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.Timestamps.CopyLink();
@@ -66,6 +70,12 @@ namespace DiscordCompagnon
             e.Handled = true;
         }
 
+        private void ImportTextButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Clipboard.ContainsText())
+                ViewModel.TextModifier.InputText = Clipboard.GetText();
+        }
+
         private void MinutesTextBox_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             ViewModel.Timestamps.EditMinutes(e.Delta > 0 ? 1 : -1);
@@ -80,6 +90,12 @@ namespace DiscordCompagnon
         private void SecondsTextBox_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             ViewModel.Timestamps.EditSeconds(e.Delta > 0 ? 1 : -1);
+        }
+
+        private void TextModifierButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            var textModifier = (ITextChanger)((FrameworkElement)sender).DataContext;
+            ViewModel.TextModifier.Preview(textModifier);
         }
 
         private void TimeTextBox_GotFocus(object sender, RoutedEventArgs e)
