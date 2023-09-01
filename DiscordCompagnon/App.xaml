@@ -15,6 +15,12 @@
         </Style>
 
         <Style
+            TargetType="Hyperlink">
+            <Setter
+                Property="Foreground"
+                Value="#00a8fc" />
+        </Style>
+        <Style
             TargetType="CheckBox">
             <Setter
                 Property="Cursor"
