@@ -199,7 +199,7 @@ namespace DiscordCompagnon
             new TimestampType("Short time", "t", "07:34 AM"),
             new TimestampType("Long time", "T", "07:34:25 AM"),
             new TimestampType("Date & time", "f", "September 1 2023 07:34 AM"),
-            new TimestampType("Weekday, date & time", "f", "Friday, September 1 2023 07:34 AM"),
+            new TimestampType("Weekday, date & time", "F", "Friday, September 1 2023 07:34 AM"),
             new TimestampType("Time left", "R", "in 3 days"),
         };
 
