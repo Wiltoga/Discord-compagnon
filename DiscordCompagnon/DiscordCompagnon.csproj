@@ -9,8 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="copy.png" />
     <None Remove="help.png" />
-    <None Remove="link.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,8 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="copy.png" />
     <Resource Include="help.png" />
-    <Resource Include="link.png" />
   </ItemGroup>
 
   <ItemGroup>

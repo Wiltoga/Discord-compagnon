@@ -379,14 +379,14 @@
                                 Orientation="Horizontal">
                                 <Image
                                     VerticalAlignment="Center"
-                                    Source="/link.png"
+                                    Source="/copy.png"
                                     Stretch="None" />
                                 <TextBlock
                                     Style="{StaticResource DiscordText}"
                                     FontWeight="DemiBold"
                                     Margin="10,0,0,0"
                                     VerticalAlignment="Center">
-                                    Copy link
+                                    Copy code
                                 </TextBlock>
                             </StackPanel>
                         </Button>
