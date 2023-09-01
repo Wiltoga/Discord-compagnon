@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -51,10 +52,34 @@ namespace DiscordCompagnon
             ViewModel.Timestamps.CopyLink();
         }
 
+        private void HoursTextBox_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ViewModel.Timestamps.EditHours(e.Delta > 0 ? 1 : -1);
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri)
+            {
+                UseShellExecute = true
+            });
+            e.Handled = true;
+        }
+
+        private void MinutesTextBox_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ViewModel.Timestamps.EditMinutes(e.Delta > 0 ? 1 : -1);
+        }
+
         private void NumberTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void SecondsTextBox_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            ViewModel.Timestamps.EditSeconds(e.Delta > 0 ? 1 : -1);
         }
 
         private void TimeTextBox_GotFocus(object sender, RoutedEventArgs e)

@@ -212,36 +212,39 @@
                                     VerticalAlignment="Center"
                                     Orientation="Vertical">
                                     <StackPanel
-                                    Orientation="Horizontal">
+                                        Orientation="Horizontal">
                                         <TextBox
-                                        GotFocus="TimeTextBox_GotFocus"
-                                        PreviewTextInput="NumberTextBox_PreviewTextInput"
-                                        Text="{Binding Hours, Mode=TwoWay}"
-                                        Width="50" />
+                                            MouseWheel="HoursTextBox_MouseWheel"
+                                            GotFocus="TimeTextBox_GotFocus"
+                                            PreviewTextInput="NumberTextBox_PreviewTextInput"
+                                            Text="{Binding Hours, Mode=TwoWay}"
+                                            Width="50" />
                                         <TextBlock
-                                        Margin="5"
-                                        FontSize="16"
-                                        Foreground="#dbdee1"
-                                        VerticalAlignment="Center">
-                                        :
+                                            Margin="5"
+                                            FontSize="16"
+                                            Foreground="#dbdee1"
+                                            VerticalAlignment="Center">
+                                            :
                                         </TextBlock>
                                         <TextBox
-                                        Text="{Binding Minutes, Mode=TwoWay}"
-                                        GotFocus="TimeTextBox_GotFocus"
-                                        PreviewTextInput="NumberTextBox_PreviewTextInput"
-                                        Width="50" />
+                                            MouseWheel="MinutesTextBox_MouseWheel"
+                                            Text="{Binding Minutes, Mode=TwoWay}"
+                                            GotFocus="TimeTextBox_GotFocus"
+                                            PreviewTextInput="NumberTextBox_PreviewTextInput"
+                                            Width="50" />
                                         <TextBlock
-                                        Margin="5"
-                                        FontSize="16"
-                                        Foreground="#dbdee1"
-                                        VerticalAlignment="Center">
-                                        :
+                                            Margin="5"
+                                            FontSize="16"
+                                            Foreground="#dbdee1"
+                                            VerticalAlignment="Center">
+                                            :
                                         </TextBlock>
                                         <TextBox
-                                        Text="{Binding Seconds, Mode=TwoWay}"
-                                        GotFocus="TimeTextBox_GotFocus"
-                                        PreviewTextInput="NumberTextBox_PreviewTextInput"
-                                        Width="50" />
+                                            MouseWheel="SecondsTextBox_MouseWheel"
+                                            Text="{Binding Seconds, Mode=TwoWay}"
+                                            GotFocus="TimeTextBox_GotFocus"
+                                            PreviewTextInput="NumberTextBox_PreviewTextInput"
+                                            Width="50" />
                                     </StackPanel>
                                     <StackPanel
                                         Margin="5"

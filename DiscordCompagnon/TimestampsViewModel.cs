@@ -34,7 +34,7 @@ namespace DiscordCompagnon
                     var current = hours[..2];
                     if (int.TryParse(current, out var currentInt))
                     {
-                        if (currentInt < 0)
+                        if (currentInt <= 0)
                             return "00";
                         if (!IsAmPm && currentInt > 23)
                             return "23";
@@ -55,10 +55,10 @@ namespace DiscordCompagnon
                     var current = minutes[..2];
                     if (int.TryParse(current, out var currentInt))
                     {
-                        if (currentInt < 0)
+                        if (currentInt <= 0)
                             return "00";
                         if (currentInt > 59)
-                            return "23";
+                            return "59";
                         return current;
                     }
                     return "00";
@@ -74,10 +74,10 @@ namespace DiscordCompagnon
                     var current = seconds[..2];
                     if (int.TryParse(current, out var currentInt))
                     {
-                        if (currentInt < 0)
+                        if (currentInt <= 0)
                             return "00";
                         if (currentInt > 59)
-                            return "23";
+                            return "59";
                         return current;
                     }
                     return "00";
@@ -146,6 +146,33 @@ namespace DiscordCompagnon
                     Clipboard.SetText($"<t:{targetDate.ToUnixTimeSeconds()}:{SelectedTimestampType.Format}>");
                 }
                 catch { }
+            }
+        }
+
+        public void EditHours(int delta)
+        {
+            if (int.TryParse(Hours, out var integer))
+            {
+                integer += delta;
+                Hours = integer.ToString("00");
+            }
+        }
+
+        public void EditMinutes(int delta)
+        {
+            if (int.TryParse(Minutes, out var integer))
+            {
+                integer += delta;
+                Minutes = integer.ToString("00");
+            }
+        }
+
+        public void EditSeconds(int delta)
+        {
+            if (int.TryParse(Seconds, out var integer))
+            {
+                integer += delta;
+                Seconds = integer.ToString("00");
             }
         }
     }
