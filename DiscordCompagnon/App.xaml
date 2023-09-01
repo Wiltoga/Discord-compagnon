@@ -70,6 +70,7 @@
                                             x:Name="spaceRight" />
                                     </Grid.ColumnDefinitions>
                                     <Border
+                                        VerticalAlignment="Center"
                                         Grid.Column="1"
                                         Name="check"
                                         Height="18"
@@ -172,7 +173,7 @@
                                                     Value="18"
                                                     KeyTime="0:0:0" />
                                                 <LinearDoubleKeyFrame
-                                                    Value="16"
+                                                    Value="14"
                                                     KeyTime="{StaticResource half}" />
                                                 <LinearDoubleKeyFrame
                                                     Value="18"
@@ -185,7 +186,7 @@
                                                     Value="9"
                                                     KeyTime="0:0:0" />
                                                 <LinearDoubleKeyFrame
-                                                    Value="8"
+                                                    Value="7"
                                                     KeyTime="{StaticResource half}" />
                                                 <LinearDoubleKeyFrame
                                                     Value="9"
@@ -280,7 +281,7 @@
                                                     Value="18"
                                                     KeyTime="0:0:0" />
                                                 <LinearDoubleKeyFrame
-                                                    Value="16"
+                                                    Value="14"
                                                     KeyTime="{StaticResource half}" />
                                                 <LinearDoubleKeyFrame
                                                     Value="18"
@@ -293,7 +294,7 @@
                                                     Value="9"
                                                     KeyTime="0:0:0" />
                                                 <LinearDoubleKeyFrame
-                                                    Value="8"
+                                                    Value="7"
                                                     KeyTime="{StaticResource half}" />
                                                 <LinearDoubleKeyFrame
                                                     Value="9"
