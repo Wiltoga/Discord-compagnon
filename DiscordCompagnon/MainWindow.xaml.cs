@@ -126,6 +126,19 @@ namespace DiscordCompagnon
         {
             if (Instance is not null)
             {
+                if (DiscordProcess is not null)
+                {
+                    var windowSize = new RECT();
+                    GetWindowRect(DiscordProcess.MainWindowHandle, ref windowSize);
+                    if (windowSize.Top == 0 &&
+                        windowSize.Bottom == 0 &&
+                        windowSize.Left == 0 &&
+                        windowSize.Right == 0)
+                    {
+                        DiscordProcess.Dispose();
+                        DiscordProcess = null;
+                    }
+                }
                 if (DiscordProcess is null || DiscordProcess.HasExited)
                 {
                     var allProcesses = Process.GetProcesses();
@@ -139,6 +152,11 @@ namespace DiscordCompagnon
                         catch { }
                         return false;
                     });
+
+                    foreach (var otherProcess in allProcesses.Except(new[] { DiscordProcess! }.Where(p => p is not null)))
+                    {
+                        otherProcess.Dispose();
+                    }
                 }
                 if (DiscordProcess is not null)
                 {
@@ -209,6 +227,10 @@ namespace DiscordCompagnon
                             Instance.Hide();
                     }
                     catch { }
+                }
+                else
+                {
+                    Instance.Hide();
                 }
             }
         }
